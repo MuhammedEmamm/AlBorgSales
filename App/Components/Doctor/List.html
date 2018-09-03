@@ -61,7 +61,7 @@
 
                     </tbody>
                 </table>
-										<button class="btn btn-warning pull-right" ng-click="loadMore()" ng-if="load">Load More</button>
+										<button class="btn btn-warning pull-right" ng-click="loadMore()" ng-if="load && totalDisplayed < doctors.length">Load More</button>
 				<img id="loading" src="/AlBorgSales/Assets/Images/Spinner-1s-200px.gif" style="width: 150px ; height: 150px ; margin-left: 40%" >
 						<br>
             </div>

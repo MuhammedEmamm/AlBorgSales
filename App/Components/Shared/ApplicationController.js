@@ -4,11 +4,16 @@
     angular.module('app')
         .controller('ApplicationController', ApplicationController);
 
-    ApplicationController.$inject = ['$scope', '$rootScope','AuthService', 'BASE_URL', '$state', '$http', '$cookies','AUTH_EVENTS'];
+    ApplicationController.$inject = ['$scope', '$rootScope','AuthService', 'BASE_URL', '$state', '$http', '$cookies','AUTH_EVENTS' ,  'Idle' , 'Keepalive' , '$uibModal'];
 
-    function ApplicationController($scope, $rootScope, AuthService, BASE_URL, $state, $http, $cookies,AUTH_EVENTS) {
+    function ApplicationController($scope, $rootScope, AuthService, BASE_URL, $state, $http, $cookies,AUTH_EVENTS , Idle, Keepalive, $uibModal) {
 		var expiresdate = new Date(2040,12,1);
-		$state.go('Login') ; 
+			if($cookies.getObject('isloggedin1')!== 'true'){
+		//('a') ; 
+				$state.go('Login') ; 
+			}
+				$scope.started = false;		
+
 			$scope.oldest = [] ; 
 		$scope.oldest.push(-1) ; 
 		
@@ -22,6 +27,10 @@
             $scope.role = $cookies.getObject('RoleName1');
             $scope.userName = $cookies.getObject('FullName1');
             $scope.ppUrl = $cookies.getObject('ImageURL1');
+						$scope.UID = $cookies.getObject('UserID1');
+			$scope.Role = AuthService.RoleName ; 
+			$scope.UserID = AuthService.UserID ; 
+
 			if($cookies.getObject('Remme1'))
 			$cookies.putObject('isloggedin1',"true"  , {
 						'expires': (expiresdate)
@@ -56,11 +65,12 @@
 			$http({
 				method:"POST",
 				url: BASE_URL +  "/Visit/GetNotifications",
-				headers:{
-					"content-type": "Application/json",
+			 headers: {
+                    "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1')
-				},
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
+                },
 				data:{
 					"CompanyID" : 15
 				}
@@ -100,9 +110,60 @@
   $scope.GetNotification();
 }, 120000) ; 
 		
-		setInterval(function(){
-			console.clear() ; 
-		} , 5000) ; 
+//		setInterval(function(){
+//			console.clear() ; 
+//		} , 5000) ; 
+//		
+		if($rootScope.login===false){
+					      function closeModals() {
+        if ($scope.warning) {
+          $scope.warning.close();
+          $scope.warning = null;
+        }
+
+        if ($scope.timedout) {
+          $scope.timedout.close();
+          $scope.timedout = null;
+        }
+      }
+
+      $scope.$on('IdleStart', function() {
+        closeModals();
+
+        $scope.warning = $uibModal.open({
+          templateUrl: 'warning-dialog.html',
+          windowClass: 'modal-danger'
+        });
+      });
+
+      $scope.$on('IdleEnd', function() {
+        closeModals();
+      });
+
+			$scope.$on('IdleTimeout', function() {
+        closeModals();
+		  $rootScope.logout() ; 
+        
+      });
+
+      $scope.start = function() {
+        closeModals();
+        Idle.watch();
+        $scope.started = true;
+      };
+
+      $scope.stop = function() {
+        closeModals();
+        Idle.unwatch();
+        $scope.started = false;
+
+      };
+		$scope.start() ; 
+		
+				}
+
+
+		
         $rootScope.logout = function () {
 			AuthService.logout();
             $state.go('Login');

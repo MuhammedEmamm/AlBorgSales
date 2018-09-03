@@ -6,6 +6,10 @@
     StockReportController.$inject = ['$scope', '$rootScope', '$state', '$http','BASE_URL', 'HTTP_HEADERS','$cookies'];
 
     function StockReportController($scope, $rootScope, $state, $http, AuthService, Session, BASE_URL, HTTP_HEADERS,$cookies) {
+			if($cookies.getObject('isloggedin1')!== 'true'){
+		//('a') ; 
+				$state.go('Login') ; 
+			}
 		var today = new Date() ; 
 		var curmonth = today.getMonth() ; 
         $scope.role = $cookies.getObject('RoleName1');
@@ -19,10 +23,11 @@
                     "RoleID": $cookies.getObject('RoleID1'),
                     "CompanyID": 15
                 },
-                headers: {
+               headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1')
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
                 }
 			}).then(function(response){
 				//(response.data) ; 
@@ -41,10 +46,11 @@
                 data: {
                     "CompanyID": 15
                 },
-                headers: {
+            headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1')
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
                 }
 			}).then(function(response){
 				//(response.data) ; 

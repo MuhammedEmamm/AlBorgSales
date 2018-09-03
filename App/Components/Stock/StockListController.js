@@ -6,6 +6,10 @@
     StockListController.$inject = ['$scope', '$rootScope', '$state', '$http','BASE_URL', 'HTTP_HEADERS','$cookies'];
 
     function StockListController($scope, $rootScope, $state, $http, BASE_URL, HTTP_HEADERS,$cookies) {
+			if($cookies.getObject('isloggedin1')!== 'true'){
+		//('a') ; 
+				$state.go('Login') ; 
+			}
 
         $scope.role =$cookies.getObject('RoleName1');
 
@@ -32,10 +36,11 @@
                     "RoleID": $cookies.getObject('RoleID1'),
                     "CompanyID": 15
                 },
-                headers: {
+            headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1')
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
                 }
             }).then(function (res) {
                 //(res.data);
@@ -50,11 +55,11 @@
                 data: {
                     "CompanyID": 15
                 },
-                headers: {
-            
+            headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1')
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
                 }
             }).then(function (res) {
                 $scope.reps = res.data.Response;
@@ -68,10 +73,11 @@
                 data: {
                     "CompanyID": 15
                 },
-                headers: {
+            headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1')
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
                 }
             }).then(function (res) {
                 $scope.managers = res.data.Response;
@@ -104,10 +110,11 @@
                     "CategoryID": categoryId,
                     "CompanyID": 15
                 },
-                headers: {
+             headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1')
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
                 }
             }).then(function (res) {
                 //(res.data);
@@ -128,10 +135,11 @@
                     "Qty": $scope.stock.Quantity,
                     "CompanyID": 15
                 },
-                headers: {
+            headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1')
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
                 }
             }).then(function (res) {
                 //(res.data);

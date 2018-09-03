@@ -24,6 +24,9 @@
 				data: loginData,
 				headers: HTTP_HEADERS
 			}).then(function (res) {
+								authService.RoleName = res.data.Response.RoleName ; 
+				authService.UserID = res.data.Response.UserID ; 
+
 
 				if (x) {
 					

@@ -3,9 +3,16 @@
 
     angular.module('app').controller('DoctorListController', DoctorListController);
 
-    DoctorListController.$inject = ['$scope', '$rootScope', '$state', '$http','BASE_URL', 'HTTP_HEADERS','$cookies'];
+    DoctorListController.$inject = ['$scope', '$rootScope', '$state', '$http','BASE_URL', 'HTTP_HEADERS','$cookies' , 'Idle'];
 
-    function DoctorListController($scope, $rootScope, $state, $http,BASE_URL, HTTP_HEADERS,$cookies) {
+    function DoctorListController($scope, $rootScope, $state, $http,BASE_URL, HTTP_HEADERS,$cookies , Idle) {
+		
+				Idle.watch() ;
+		if($cookies.getObject('isloggedin1')!== 'true'){
+		//('a') ; 
+				$state.go('Login') ; 
+			}
+				$rootScope.login = false ; 
 
         $scope.role = $cookies.getObject('RoleName1');
 		$scope.totalDisplayed = 20;
@@ -23,10 +30,11 @@
                 headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1')
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
                 }
             }).then(function (res) {
-                //(res.data);
+                //(res.data.Response.length);
                 $scope.doctors = res.data.Response;
 				$scope.load = true; 
 				document.getElementById('loading').style.display = "none" ; 

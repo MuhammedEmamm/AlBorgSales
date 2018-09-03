@@ -1,9 +1,12 @@
 ﻿(function () {
     'use strict';
 
-    var app = angular.module('app', ['ui.router', 'ui.bootstrap','ngCookies','google-maps']);
+    var app = angular.module('app', ['ui.router', 'ui.bootstrap','ngCookies','google-maps' ,'ngIdle']);
 
-    app.config(function ($stateProvider, $urlRouterProvider, USER_ROLES , $locationProvider) {
+    app.config(function ($stateProvider, $urlRouterProvider, USER_ROLES , $locationProvider , KeepaliveProvider, IdleProvider) {
+		 IdleProvider.idle(10);
+  		IdleProvider.timeout(10);
+		KeepaliveProvider.interval(10);
         $urlRouterProvider.otherwise('/Login');
 		$locationProvider.hashPrefix('');
         $stateProvider
@@ -164,6 +167,8 @@
         function ($rootScope, $state, $stateParams, AUTH_EVENTS, AuthService) {
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
+						$rootScope.login = false;
+
 
             $rootScope.$on('$stateChangeStart', function (event, next) {
                 var authorizedRoles = next.data.authorizedRoles;

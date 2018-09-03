@@ -4,11 +4,12 @@
     angular.module('app')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$scope', '$rootScope', '$state', 'AUTH_EVENTS', 'AuthService' , '$cookies'];
+    LoginController.$inject = ['$scope', '$rootScope', '$state', 'AUTH_EVENTS', 'AuthService' , '$cookies' , 'Idle'];
 
-    function LoginController($scope, $rootScope, $state, AUTH_EVENTS, AuthService , $cookies) {
+    function LoginController($scope, $rootScope, $state, AUTH_EVENTS, AuthService , $cookies , Idle) {
 		$scope.Presslogin = false ; 
-
+		$rootScope.login = true ; 
+		Idle.unwatch();
         $scope.credentials = {
             username: '',
             password: ''

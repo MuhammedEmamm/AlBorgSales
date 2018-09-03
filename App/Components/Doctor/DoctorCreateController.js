@@ -4,10 +4,15 @@
     angular.module('app')
         .controller('DoctorCreateController', DoctorCreateController);
 
-    DoctorCreateController.$inject = ['$scope', '$rootScope', '$state', '$http','BASE_URL', 'HTTP_HEADERS', '$cookies'];
+    DoctorCreateController.$inject = ['$scope', '$rootScope', '$state', '$http','BASE_URL', 'HTTP_HEADERS', '$cookies' ];
 
-    function DoctorCreateController($scope, $rootScope, $state, $http, BASE_URL, HTTP_HEADERS , $cookies) {
-        $scope.totalDisplayed = 20;
+    function DoctorCreateController($scope, $rootScope, $state, $http, BASE_URL, HTTP_HEADERS , $cookies ) {
+        	if($cookies.getObject('isloggedin1')!== 'true'){
+		//('a') ; 
+				$state.go('Login') ; 
+			}
+		$scope.totalDisplayed = 20;
+		
 		$scope.show = false ; 
         var getOrgs = function () {
 
@@ -18,10 +23,11 @@
                     "DoctorID": "8CD32714-C0A2-41D4-BB53-C700D7F98756",
                     "CompanyID": 15
                 },
-                headers: {
+             headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1')
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
                 }
             }).then(function (res) {
                 //(res.data);
@@ -41,10 +47,11 @@
                 method: 'POST',
                 url: BASE_URL + '/Doctor/GetSpecialities',
                 data: { "CompanyID": 15 },
-                headers: {
+              headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1')
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
                 }
             }).then(function (res) {
                 //(res.data);
@@ -61,10 +68,11 @@
                 method: 'POST',
                 url: BASE_URL + '/Doctor/GetDoctorCategory',
                 data: { "CompanyID": 15 },
-                headers: {
+               headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1')
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
                 }
             }).then(function (res) {
                 //(res.data);
@@ -115,10 +123,11 @@
                     "Mobile": $scope.doctor.mob,
                     "CompanyID": 15
                 },
-                headers: {
+               headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1')
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
                 }
             }).then(function (res) {
                 //(res.data);
@@ -139,10 +148,11 @@
                     "Contact": $scope.newOrg.contact,
                     "CompanyID": 15
                 },
-                headers: {
+              headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1')
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
                 }
             }).then(function (res) {
                 //(res.data);

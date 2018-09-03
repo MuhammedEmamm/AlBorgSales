@@ -6,6 +6,10 @@
 	TeamListController.$inject = ['$scope', '$rootScope', '$state', '$http', 'BASE_URL', 'HTTP_HEADERS', '$cookies'];
 
 	function TeamListController($scope, $rootScope, $state, $http, BASE_URL, HTTP_HEADERS, $cookies) {
+			if($cookies.getObject('isloggedin1')!== 'true'){
+		//('a') ; 
+				$state.go('Login') ; 
+			}
 
 		//$('#mapDate').datepicker();
 		$('#mapDate').datepicker();;
@@ -24,11 +28,12 @@
 				data: {
 					"CompanyID": 15
 				},
-				headers: {
-					"Content-Type": "Application/json",
-					"Token": $cookies.getObject('SecurityToken1'),
-					"UserID": $cookies.getObject('UserID1')
-				}
+			 headers: {
+                    "content-type": "Application/json",
+                    "Token": $cookies.getObject('SecurityToken1'),
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
+                }
 			}).then(function (res) {
 				//(res.data);
 				$scope.team = res.data.Response;
@@ -58,11 +63,12 @@
 					"UserID": x,
 					"CompanyID": 15
 				},
-				headers: {
-					"Content-Type": "Application/json",
-					"Token": $cookies.getObject('SecurityToken1'),
-					"UserID": $cookies.getObject('UserID1')
-				}
+ headers: {
+                    "content-type": "Application/json",
+                    "Token": $cookies.getObject('SecurityToken1'),
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
+                }
 			}).then(function (res) {
 				//(res.data);
 				$scope.team = res.data.Response;
@@ -78,11 +84,12 @@
 				data: {
 					"CompanyID": 15
 				},
-				headers: {
-					"Content-Type": "Application/json",
-					"Token": $cookies.getObject('SecurityToken1'),
-					"UserID": $cookies.getObject('UserID1')
-				}
+			 headers: {
+                    "content-type": "Application/json",
+                    "Token": $cookies.getObject('SecurityToken1'),
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
+                }
 			}).then(function (res) {
 				$scope.managerList = res.data.Response;
 				$scope.managerList.push({
@@ -102,11 +109,12 @@
 				data: {
 					"CompanyID": 15
 				},
-				headers: {
-					"Content-Type": "Application/json",
-					"Token": $cookies.getObject('SecurityToken1'),
-					"UserID": $cookies.getObject('UserID1')
-				}
+			 headers: {
+                    "content-type": "Application/json",
+                    "Token": $cookies.getObject('SecurityToken1'),
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
+                }
 			}).then(function (res) {
 				$scope.managers = res.data.Response;
 				document.getElementById('loading1').style.display = "none";
@@ -142,11 +150,12 @@
 					"StatusCode": statusTo,
 					"CompanyID": 15
 				},
-				headers: {
-					"Content-Type": "Application/json",
-					"Token": $cookies.getObject('SecurityToken1'),
-					"UserID": $cookies.getObject('UserID1')
-				}
+			 headers: {
+                    "content-type": "Application/json",
+                    "Token": $cookies.getObject('SecurityToken1'),
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
+                }
 			}).then(function (res) {
 				//(res.data);
 				getTeam();
@@ -178,11 +187,12 @@
 						"StatusCode": manager.Status,
 						"CompanyID": 15
 					},
-					headers: {
-						"Content-Type": "Application/json",
-						"Token": $cookies.getObject('SecurityToken1'),
-						"UserID": $cookies.getObject('UserID1')
-					}
+				 headers: {
+                    "content-type": "Application/json",
+                    "Token": $cookies.getObject('SecurityToken1'),
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
+                }
 
 				}).then(function (res) {
 					//(res.data);
@@ -215,11 +225,12 @@
 			$http({
 				method: "POST",
 				url: BASE_URL + "/Visit/MapLocaion",
-				headers: {
-					"Content-Type": "Application/json",
-					"Token": $cookies.getObject('SecurityToken1'),
-					"UserID": $cookies.getObject('UserID1')
-				},
+			 headers: {
+                    "content-type": "Application/json",
+                    "Token": $cookies.getObject('SecurityToken1'),
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
+                },
 				data: {
 					Day: $scope.mapDate,
 					SalesRepID: $scope.SalesRepID,
@@ -250,11 +261,12 @@
 			$http({
 				method: "POST",
 				url: BASE_URL + "/Visit/MapLocaion",
-				headers: {
-					"Content-Type": "Application/json",
-					"Token": $cookies.getObject('SecurityToken1'),
-					"UserID": $cookies.getObject('UserID1')
-				},
+			 headers: {
+                    "content-type": "Application/json",
+                    "Token": $cookies.getObject('SecurityToken1'),
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
+                },
 				data: {
 					Day: $scope.mapDate1,
 					SalesRepID: $scope.SalesRepID,

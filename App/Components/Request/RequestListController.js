@@ -7,6 +7,10 @@
     RequestListController.$inject = ['$scope', '$rootScope', '$state', '$http','BASE_URL', 'HTTP_HEADERS','$cookies' , 'filterFilter'];
 
     function RequestListController($scope, $rootScope, $state, $http, BASE_URL, HTTP_HEADERS,$cookies, filterFilter) {
+			if($cookies.getObject('isloggedin1')!== 'true'){
+		//('a') ; 
+				$state.go('Login') ; 
+			}
 		
 		var role1 = $cookies.getObject('RoleName1') ; 
         var getManagers = function () {
@@ -16,10 +20,11 @@
                 data: {
                     "CompanyID": 15
                 },
-                headers: {
+              headers: {
                     "content-type": "Application/json",
-                    "Token": $cookies.getObject('SecurityToken1') ,
-                    "UserID": $cookies.getObject('UserID1')
+                    "Token": $cookies.getObject('SecurityToken1'),
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
                 }
             }).then(function (res) {
                 $scope.managers = res.data.Response;
@@ -36,10 +41,11 @@
                 data: {
                     "CompanyID": 15
                 },
-                headers: {
+              headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1')
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
                 }
             }).then(function (res) {
                 //(res.data);
@@ -58,10 +64,11 @@
                 data: {
                     "CompanyID": 15
                 },
-                headers: {
+              headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1')
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
                 }
             }).then(function (res) {
                 //(res.data);
@@ -92,10 +99,11 @@
                     "DoctorID": requestId,
                     "CompanyID": 15
                 },
-                headers: {
-                  "content-type": "Application/json",
+            headers: {
+                    "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1')
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
                 }
             }).then(function (res) {
                 //(res.data);
@@ -115,11 +123,12 @@ if($scope.type.id!=0)
                         "DoctorID": id,
                         "CompanyID": 15
                     },
-                    headers: {
-                           "content-type": "Application/json",
+                headers: {
+                    "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1')
-                    }
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
+                }
                 }).then(function (res) {
                     //(res.data);
 if($scope.type.id!=0)
@@ -136,11 +145,12 @@ if($scope.type.id!=0)
                         "PlanID": id,
                         "CompanyID": 15
                     },
-                    headers: {
+                headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1')
-                    }
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
+                }
                 }).then(function (res) {
                     //(res.data);
 					//(id) ; 
@@ -158,11 +168,12 @@ if($scope.type.id!=0)
                         "VisitID": id,
                         "CompanyID": 15
                     },
-                    headers: {
+              headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1')
-                    }
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
+                }
                 }).then(function (res) {
                     //(res.data);
 					//(id) ; 
@@ -186,11 +197,12 @@ if($scope.type.id!=0)
                         "PlanID": id,
                         "CompanyID": 15
                     },
-                    headers: {
-                       "content-type": "Application/json",
+              headers: {
+                    "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1')
-                    }
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
+                }
                 }).then(function (res) {
                     //(res.data);
 if($scope.type.id!=0)
@@ -207,11 +219,12 @@ if($scope.type.id!=0)
                         "PlanID": id,
                         "CompanyID": 15
                     },
-                    headers: {
-                       "content-type": "Application/json",
+               headers: {
+                    "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1')
-                    }
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
+                }
                 }).then(function (res) {
                     //(res.data);
                   	if($scope.type.id!=0)
@@ -228,11 +241,12 @@ if($scope.type.id!=0)
 			$http({
 				method : "POST" , 
 				url : BASE_URL + "/Visit/GetPlanDeadline",
-				headers :{
-					"content-type": "Application/json",
+			 headers: {
+                    "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1')
-				} , 
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
+                } , 
 				data : {
 				"CompanyID":15
 				}
@@ -247,11 +261,12 @@ if($scope.type.id!=0)
 			$http({
 				method : "POST" , 
 				url : BASE_URL +  "/Visit/ChangePlanDeadline",
-				headers :{
-					"content-type": "Application/json",
+			 headers: {
+                    "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1')
-				} , 
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
+                } , 
 				data : {
 					"Day" : $scope.deadline ,
 				"CompanyID":15
@@ -311,10 +326,11 @@ if($scope.type.id!=0)
             $http({
                 method: "POST",
                 url: BASE_URL + "/Visit/GetPlanVisits",
-                headers: {
-                    "Content-Type": "application/json",
+              headers: {
+                    "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1')
+                    "UserID": $cookies.getObject('UserID1') ,
+					'X-Frame-Options' : 'DENY'
                 },
                 data: {
                     "Month": mm,
