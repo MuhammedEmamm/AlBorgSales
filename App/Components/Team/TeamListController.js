@@ -20,6 +20,83 @@
 		$scope.showManagers = true;
 		$scope.showReps = true;
 		//($scope.role);
+		
+		var expiresdate = new Date(2040,12,1);
+ 
+		
+		$scope.setexperiod = function(){
+			$http({
+				method : "POST" , 
+				url : BASE_URL + "/User/UpdatePeriod",
+				headers :{
+		
+                    "content-type": "Application/json",
+                    "Token": $cookies.getObject('SecurityToken1'),
+                    "UserID": $cookies.getObject('UserID1') , 
+					'X-Frame-Options' : 'DENY'
+				} , 
+				data : {
+						"Period":$scope.expr,
+						"UserID":$cookies.getObject('UserID1'), 
+						"CompanyID":15
+				}
+			}).then(function(response){
+			   if(response.data.IsSuccess){
+				   $scope.message = "Changed Successfully" ; 
+				   console.log(response.data) ; 
+				   window.location.reload() ; 
+				   $("#PModal").modal("hide") ; 
+			   } 
+			});
+			
+		} ; 
+		
+		$scope.ResetPassword = function(x){
+			$scope.date = new Date()  ; 
+
+			$scope.PressReset = true;
+
+//			console.log($scope.date) ; 
+			$http({
+				method: 'POST',
+				url: BASE_URL + '/User/ResetPassword',
+				data: {
+					"UserID": x,
+					"CompanyID": 15,
+					"NewPassword":"1234",
+  					"CreationDate":$scope.date
+  
+				},
+				headers: {
+			
+                    "content-type": "Application/json",
+                    "Token": $cookies.getObject('SecurityToken1'),
+                    "UserID": $cookies.getObject('UserID1') , 
+					'X-Frame-Options' : 'DENY'
+				}
+				
+			}).then(function(res){
+				console.log(res.data) ; 
+				if(res.data.IsSuccess){
+					
+					$scope.message1 = "Password Changed To 1234." ;
+						$cookies.putObject('EX_P1',$scope.date  , {
+						'expires': (expiresdate)
+					}) ;
+					$('#okModal2').modal('show');
+	
+				}
+				else{
+					$scope.message1 = "Error From Server." ;
+					
+				}
+
+			}) ;
+			
+			
+		} ; 
+		
+		
 		var getTeam = function () {
 
 			$http({
@@ -301,7 +378,9 @@
 			clickedLongitudeProperty: null,
 		});
 		getTeam();
+		if($scope.role === 'SalesAdmin')
 		getManagers();
+		if($scope.role === 'SalesAdmin')
 		getManagerList();
 	}
 })();

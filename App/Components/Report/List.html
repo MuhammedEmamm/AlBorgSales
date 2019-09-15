@@ -232,11 +232,19 @@
 						<thead>
 							<tr>
 								<th>
+									SalesRep.
+									<a class="pull-right" ng-click="reportOrderField='SalesRepName'; reportReverse = !reportReverse">
+                                        <span class="glyphicon glyphicon-sort pull-right"></span>
+                                    </a>
+								</th>
+								
+								<th>
 									Doctor
 									<a class="pull-right" ng-click="reportOrderField='DoctorName'; reportReverse = !reportReverse">
                                         <span class="glyphicon glyphicon-sort pull-right"></span>
                                     </a>
 								</th>
+								
 								<th>
 									Visit Date
 									<a class="pull-right" ng-click="reportOrderField='VisitDate'; reportReverse = !reportReverse">
@@ -276,10 +284,25 @@
                                         <span class="glyphicon glyphicon-sort pull-right"></span>
                                     </a>
                                 </th>
+								<th>
+                                    Target
+                                    <a class="pull-right"
+                                       ng-click="reportOrderField='Target'; reportReverse = !reportReverse">
+                                        <span class="glyphicon glyphicon-sort pull-right"></span>
+                                    </a>
+                                </th>
+								<th>
+                                    Amount
+                                    <a class="pull-right"
+                                       ng-click="reportOrderField='Amount'; reportReverse = !reportReverse">
+                                        <span class="glyphicon glyphicon-sort pull-right"></span>
+                                    </a>
+                                </th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="item in report | orderBy: reportOrderField : reortReverse | filter: searchReportTerm track by $index">
+							<tr ng-repeat="item in report | orderBy: reportOrderField : reportReverse | filter: searchReportTerm track by $index">
+								<td>{{item.SalesRepName}}</td>
 								<td>{{item.DoctorName}}</td>
 								<td>{{item.VisitDate | date:'dd-MM-yyyy'}}</td>
 								<td>
@@ -293,6 +316,9 @@
 								<td>{{item.TestName}}</td>
                                 <td>{{item.TestFeedback}}</td>
                                 <td>{{item.TestComment}}</td>
+								<td>{{item.Target}}</td>
+								<td>{{item.Amount}}</td>
+								
 							</tr>
 						</tbody>
 					</table>
@@ -303,7 +329,7 @@
 		</div>
 
 	</div>
-    <script src="assets/js/jquery.app.js"></script>
+<!--    <script src="assets/js/jquery.app.js"></script>-->
 
 	<div id="myModal" class="modal" role="dialog" style="overflow-y: scroll;">
 		<div class="modal-dialog">

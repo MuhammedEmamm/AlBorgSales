@@ -1,5 +1,9 @@
 ﻿<div class="container">
     <div class="row" ng-show="role === 'SalesAdmin'">
+		<div class="col-sm-12"><button class="btn btn-primary" data-target="#PModal" data-toggle="modal">Change Expiration Period</button></div>
+		<br>
+		<br>
+		<br>
         <div class="col-sm-12">
             <div class="card-box table-responsive" style="overflow: scroll">
                 <div class="row">
@@ -40,13 +44,6 @@
                                         <span class="glyphicon glyphicon-sort pull-right"></span>
                                     </a>
                                 </th>
-								<th>
-                                    VisitPlan Status
-                                    <a class="pull-right" ng-click="managerOrderField='PlanStatus'; managerReverse = !managerReverse">
-                                        <span class="glyphicon glyphicon-sort pull-right"></span>
-                                    </a>
-                                </th>
-								
                                 <th>
                                     Activity Date
                                     <a class="pull-right" ng-click="managerOrderField='ActiveDate'; managerReverse = !managerReverse">
@@ -59,18 +56,15 @@
                                         <span class="glyphicon glyphicon-sort pull-right"></span>
                                     </a>
                                 </th>
+								<th>
+									Reset Password
+								</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="manager in managers | filter: searchManagerTerm | orderBy: managerOrderField :  managerReverse">
                                 <td class="midd-td"><a>{{manager.ManagerName}}</a></td>
                                 <td class="midd-td">{{manager.Mobile}}</td>
-								                                <td class="midd-td" ng-if="member.PlanStatus===0">No Plan For Current Month</td>
-
-								<td class="midd-td" ng-if="member.PlanStatus===1">Created</td>
-								<td class="midd-td" ng-if="member.PlanStatus===2">Submitted</td>
-								<td class="midd-td" ng-if="member.PlanStatus===3">Approved</td>
-								
                                 <td class="midd-td">{{manager.ActiveDate | date:'dd-MM-yyyy'}}</td>
                                 <td class="midd-td">
                                     <label class="switch">
@@ -80,6 +74,10 @@
                                         <label class="tgl-btn" for="cbManager+ {{manager.ManagerID}}"></label>
                                     </label>
                                 </td>
+								<td class="midd-td">
+									<button class="btn btn-danger" ng-click="ResetPassword(manager.ManagerID)">Reset Password</button>
+								</td>
+								
                             </tr>
                         </tbody>
                     </table>
@@ -406,6 +404,51 @@
         </div>
     </div>
 </div>
+
+<div id="okModal2" class="modal" role="dialog" style="overflow-y: scroll;">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header" style="padding-bottom: 0px;">
+				<h3 class="header-title m-t-0 m-b-30">Reset Password</h3>
+			</div>
+			<div class="modal-body">
+				<p>{{message1}}</p>
+			</div>
+			<div class="modal-footer">
+				<div class="dropdown pull-right">
+					<button data-dismiss="modal" type="button" class="btn btn-success waves-effect w-md m-b-5">Ok</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div id="PModal" class="modal" role="dialog" style="overflow-y: scroll;">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header" style="padding-bottom: 0px;">
+				<h3 class="header-title m-t-0 m-b-30">Change Expiration Period</h3>
+			</div>
+			<div class="modal-body">
+				<form ng-submit="setexperiod()">
+					<label style="color: black">Expiration Period</label>&nbsp;
+					<input type="number" ng-model="expr" placeholder="Expiration Period" required>
+					<button type="submit" class="btn btn-success pull-right">Submit</button>
+				</form>
+				
+							</div>
+			<div class="modal-footer">
+				<div class="dropdown pull-right">
+					<button data-dismiss="modal" type="button" class="btn btn-success waves-effect w-md m-b-5">Ok</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 	<style>
 	.angular-google-map {
 			display: block;

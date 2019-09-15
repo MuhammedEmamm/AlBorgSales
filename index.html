@@ -107,6 +107,10 @@
                                 <i class="zmdi zmdi-power"></i>
                             </a>
                         </li>
+						<br>
+						<li><a data-target="#UpdatePassword" data-toggle="modal" class="text-muted" style="cursor: pointer">
+								<i class="fa fa-lock m-r-5"></i> Update Password
+							</a></li>
                     </ul>
                 </div>
                 <!-- End User -->
@@ -134,7 +138,7 @@
                             </a>
                         </li>
 
-                        <li ng-if="role === 'SalesRep' || role === 'SalesManager' && role === Role && UID === UserID">
+                        <li>
                             <a ui-sref="DoctorsCreate" class="waves-effect" ng-class="{ 'active': $state.current.data.pageId === 'doctorCreate'}">
                                 <i class="glyphicon glyphicon-plus"></i>
                                 <span> New Doctor  </span>
@@ -149,14 +153,14 @@
                             </a>
                         </li>
 						
-						<li ng-if="role === 'SalesRep' || role === 'SalesManager' && role === Role && UID === UserID">
+						<li>
 							<a ui-sref="TodayVisits" class="waves-effect" ng-class="{ 'active': $state.current.data.pageId === 'visits'}">
 								<i class="glyphicon glyphicon-time"></i>
 								<span> Today visit </span>
 							</a>
 						</li>
 						
-                        <li ng-if="role === 'SalesRep' || role === 'SalesManager' && role === Role && UID === UserID">
+                        <li>
                             <a ui-sref="VisitPlan" class="waves-effect" ng-class="{ 'active': $state.current.data.pageId === 'plan'}">
                                 <i class="glyphicon glyphicon-calendar"></i>
                                 <span> Visit plan </span>
@@ -227,6 +231,43 @@
     <div ui-view ng-if="$state.current.data.pageType === 'full'">
 
     </div>
+			<div id="UpdatePassword" class="modal" role="dialog" style="overflow-y: scroll;">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header" style="padding-bottom: 0px;">
+				<h3 class="header-title m-t-0 m-b-30">Update Password</h3>
+			</div>
+			<div class="modal-body">
+				<form ng-submit="Updatepass()">
+					<div class="form-group">
+					<label style="color: black">Old Password</label>&nbsp;
+					<input type="password" ng-model="OP" placeholder="Old Password"  class="form-control" required>
+					
+					</div>
+					
+					<br>
+					<div class="form-group">
+					
+						<label style="color: black">New Password</label>&nbsp;
+					<input type="password" ng-model="NP" placeholder="New Password" class="form-control" required pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"   minlength="8" title="Password should be min 8 characters and contain at least one letter, one number and one special character [!@#$%^&*(),.?:{}|<>]">
+						</div>
+					
+					<div class="form-group">
+						<button type="submit" class="btn btn-success pull-right">Submit</button>
+						<br>
+					</div>
+				</form>
+							</div>
+			<div class="modal-footer">
+				<div class="dropdown pull-right">
+					<button data-dismiss="modal" type="button" class="btn btn-success waves-effect w-md m-b-5">Ok</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 
     <!--<div login-dialog ng-show="!isLoginPage"></div>-->
 	<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
@@ -255,6 +296,7 @@
 	<script src="App/Components/Report/StockReportjs.js"></script>
     <script src="App/Components/Report/AvtReport.js"></script>    
     <script src="App/Components/Report/ReportListController.js"></script>
+	<script src="App/Components/Report/T&A.js"></script>
 	<script src="App/Components/Report/DetailedAmount.js"></script>
 	<!-- Datatables-->
     <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>

@@ -9,14 +9,31 @@
 		var authService = {};
 		var expiresdate = new Date(2040,12,1);
 
-		authService.login = function (credentials, x) {
-
-			var loginData = {
-				"Email": credentials.username,
+		authService.login = function (credentials, x , y) {
+				console.log(y) ; 
+			if(y === 3){
+				var loginData = {		
+				"Name": credentials.username,
 				"Password": credentials.password,
 				"DeviceToken": "",
-				"CompanyID": 15
+				"CompanyID": 15,
+				"Louck": 1,
+				"employeeID": "6c699f76-e696-e711-80f5-000c29c47db9"
 			};
+				
+			}
+			else{
+				var loginData = {		
+				"Name": credentials.username,
+				"Password": credentials.password,
+				"DeviceToken": "",
+				"CompanyID": 15,
+				"Louck": 0,
+				"employeeID": "6c699f76-e696-e711-80f5-000c29c47db9"
+			};
+				
+			}
+			
 
 			return $http({
 				method: 'POST',
@@ -26,6 +43,8 @@
 			}).then(function (res) {
 								authService.RoleName = res.data.Response.RoleName ; 
 				authService.UserID = res.data.Response.UserID ; 
+					$cookies.putObject('ZX_A1', res.data.Response.UserID);
+				$cookies.putObject('MK_L1', res.data.Response.RoleName);
 
 
 				if (x) {
@@ -80,6 +99,9 @@
 			$cookies.remove('RoleName1');
 			$cookies.remove('Remme1') ; 
 			$cookies.remove('isloggedin1') ; 
+			$cookies.remove('ZX_A1');
+			$cookies.remove('MK_L1');
+			
 			
 		};
 

@@ -3,13 +3,13 @@
 
     angular.module('app').controller('ReportListController', ReportListController);
 
-    ReportListController.$inject = ['$scope', '$rootScope', '$state', '$http','BASE_URL', 'HTTP_HEADERS','$cookies'];
+    ReportListController.$inject = ['$scope', '$rootScope', '$state', '$http', 'BASE_URL', 'HTTP_HEADERS', '$cookies'];
 
-    function ReportListController($scope, $rootScope, $state, $http, BASE_URL, HTTP_HEADERS,$cookies) {
-if($cookies.getObject('isloggedin1')!== 'true'){
-		//('a') ; 
-				$state.go('Login') ; 
-			}
+    function ReportListController($scope, $rootScope, $state, $http, BASE_URL, HTTP_HEADERS, $cookies) {
+        if ($cookies.getObject('isloggedin1') !== 'true') {
+            //('a') ; 
+            $state.go('Login');
+        }
         $scope.role = $cookies.getObject('RoleName1');
 
         //var dateString = date.toISOString().split('T')[0]; // "2016-06-08"
@@ -50,11 +50,11 @@ if($cookies.getObject('isloggedin1')!== 'true'){
                     "RoleID": $cookies.getObject('RoleID1'),
                     "CompanyID": 15
                 },
-            headers: {
+                headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1') ,
-					'X-Frame-Options' : 'DENY'
+                    "UserID": $cookies.getObject('UserID1'),
+                    'X-Frame-Options': 'DENY'
                 }
             }).then(function (res) {
                 //(res.data);
@@ -66,8 +66,8 @@ if($cookies.getObject('isloggedin1')!== 'true'){
                 $scope.missedVisits = res.data.Response.MissedVisits;
                 $scope.balance = res.data.Response.TotalBalance;
                 $scope.stock = res.data.Response.TotalStock;
-				$scope.actualamount = res.data.Response.ActualAmount ; 
-				$scope.targetamount = res.data.Response.TargetAmount ;
+                $scope.actualamount = res.data.Response.ActualAmount;
+                $scope.targetamount = res.data.Response.TargetAmount;
 
             });
         }
@@ -83,11 +83,11 @@ if($cookies.getObject('isloggedin1')!== 'true'){
                     "Year": thisYear,
                     "CompanyID": 15
                 },
-            headers: {
+                headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1') ,
-					'X-Frame-Options' : 'DENY'
+                    "UserID": $cookies.getObject('UserID1'),
+                    'X-Frame-Options': 'DENY'
                 }
             }).then(function (res) {
                 //(res.data);
@@ -101,11 +101,11 @@ if($cookies.getObject('isloggedin1')!== 'true'){
                 data: {
                     "CompanyID": 15
                 },
-              headers: {
+                headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1') ,
-					'X-Frame-Options' : 'DENY'
+                    "UserID": $cookies.getObject('UserID1'),
+                    'X-Frame-Options': 'DENY'
                 }
             }).then(function (res) {
                 //(res.data);
@@ -122,11 +122,11 @@ if($cookies.getObject('isloggedin1')!== 'true'){
                     "RoleID": $cookies.getObject('RoleID1'),
                     "CompanyID": 15
                 },
-              headers: {
+                headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1') ,
-					'X-Frame-Options' : 'DENY'
+                    "UserID": $cookies.getObject('UserID1'),
+                    'X-Frame-Options': 'DENY'
                 }
             }).then(function (res) {
                 //(res.data);
@@ -148,12 +148,12 @@ if($cookies.getObject('isloggedin1')!== 'true'){
                         "CancelReasonID": $scope.reason,
                         "CompanyID": 15
                     },
-                headers: {
-                    "content-type": "Application/json",
-                    "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1') ,
-					'X-Frame-Options' : 'DENY'
-                }
+                    headers: {
+                        "content-type": "Application/json",
+                        "Token": $cookies.getObject('SecurityToken1'),
+                        "UserID": $cookies.getObject('UserID1'),
+                        'X-Frame-Options': 'DENY'
+                    }
                 }).then(function (res) {
                     if (res.data.IsSuccess) {
                         $('#myModal').modal('hide');
@@ -166,24 +166,24 @@ if($cookies.getObject('isloggedin1')!== 'true'){
             };
         };
 
-         $scope.updateDates = function () {
-		//	console.log($scope.fromDate) ;
-		//		console.log($scope.toDate) ; 
-            	
-			if($scope.fromDate.getMonth() === $scope.toDate.getMonth() && $scope.fromDate.getDate() === $scope.toDate.getDate()&& $scope.fromDate.getFullYear() === $scope.toDate.getFullYear() ){
-				
-				$scope.fromDate.setHours(0) ; 
-				$scope.fromDate.setMinutes(0) ; 
-				$scope.fromDate.setSeconds(0) ; 
-				
-				$scope.toDate.setHours(23) ;
-				$scope.toDate.setMinutes(59) ;
-				$scope.toDate.setSeconds(59) ;
-				
-			}
-				
-			
-			getCustomerReport($scope.fromDate, $scope.toDate);
+        $scope.updateDates = function () {
+            //	console.log($scope.fromDate) ;
+            //		console.log($scope.toDate) ; 
+
+            if ($scope.fromDate.getMonth() === $scope.toDate.getMonth() && $scope.fromDate.getDate() === $scope.toDate.getDate() && $scope.fromDate.getFullYear() === $scope.toDate.getFullYear()) {
+
+                $scope.fromDate.setHours(0);
+                $scope.fromDate.setMinutes(0);
+                $scope.fromDate.setSeconds(0);
+
+                $scope.toDate.setHours(23);
+                $scope.toDate.setMinutes(59);
+                $scope.toDate.setSeconds(59);
+
+            }
+
+
+            getCustomerReport($scope.fromDate, $scope.toDate);
         }
 
 
@@ -191,8 +191,7 @@ if($cookies.getObject('isloggedin1')!== 'true'){
         if ($cookies.getObject('RoleName1') === 'SalesRep') {
             getMissed();
             getReasons();
-        } 
-		else {
+        } else {
             getCustomerReport($scope.fromDate, $scope.toDate);
         }
 

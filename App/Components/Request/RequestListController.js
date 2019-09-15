@@ -4,15 +4,15 @@
     angular.module('app')
         .controller('RequestListController', RequestListController);
 
-    RequestListController.$inject = ['$scope', '$rootScope', '$state', '$http','BASE_URL', 'HTTP_HEADERS','$cookies' , 'filterFilter'];
+    RequestListController.$inject = ['$scope', '$rootScope', '$state', '$http', 'BASE_URL', 'HTTP_HEADERS', '$cookies', 'filterFilter'];
 
-    function RequestListController($scope, $rootScope, $state, $http, BASE_URL, HTTP_HEADERS,$cookies, filterFilter) {
-			if($cookies.getObject('isloggedin1')!== 'true'){
-		//('a') ; 
-				$state.go('Login') ; 
-			}
-		
-		var role1 = $cookies.getObject('RoleName1') ; 
+    function RequestListController($scope, $rootScope, $state, $http, BASE_URL, HTTP_HEADERS, $cookies, filterFilter) {
+        if ($cookies.getObject('isloggedin1') !== 'true') {
+            //('a') ; 
+            $state.go('Login');
+        }
+
+        $scope.role = $cookies.getObject('RoleName1');
         var getManagers = function () {
             $http({
                 method: 'POST',
@@ -20,15 +20,18 @@
                 data: {
                     "CompanyID": 15
                 },
-              headers: {
+                headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1') ,
-					'X-Frame-Options' : 'DENY'
+                    "UserID": $cookies.getObject('UserID1'),
+                    'X-Frame-Options': 'DENY'
                 }
             }).then(function (res) {
                 $scope.managers = res.data.Response;
-                $scope.managers.push({ ID: '', Name: '' });
+                $scope.managers.push({
+                    ID: '',
+                    Name: ''
+                });
                 //(res.data);
             });
         };
@@ -41,22 +44,22 @@
                 data: {
                     "CompanyID": 15
                 },
-              headers: {
+                headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1') ,
-					'X-Frame-Options' : 'DENY'
+                    "UserID": $cookies.getObject('UserID1'),
+                    'X-Frame-Options': 'DENY'
                 }
             }).then(function (res) {
                 //(res.data);
                 $scope.requests = res.data.Response;
-								$scope.requests2 = res.data.Response;
+                $scope.requests2 = res.data.Response;
 
             });
 
         }
-		
-		var getRequestListfilterd = function (x) {
+
+        var getRequestListfilterd = function (x) {
 
             $http({
                 method: 'POST',
@@ -64,33 +67,39 @@
                 data: {
                     "CompanyID": 15
                 },
-              headers: {
+                headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1') ,
-					'X-Frame-Options' : 'DENY'
+                    "UserID": $cookies.getObject('UserID1'),
+                    'X-Frame-Options': 'DENY'
                 }
             }).then(function (res) {
                 //(res.data);
-				$scope.requests2 = res.data.Response;
-				
-            if (x === 1) {
-				$scope.requests = filterFilter($scope.requests2,{RequestType : 'Doctor'}) ; 
-			}
-            if (x === 2) {
-                $scope.requests = filterFilter($scope.requests2,{RequestType : 'VisitPlan'}) ;
-            }
-			
-            if (x === 3) {
-                $scope.requests =filterFilter($scope.requests2,{RequestType : 'UnplannedVisit'}) ;
-            }
-				console.log($scope.requests) ; 
-				
+                $scope.requests2 = res.data.Response;
+
+                if (x === 1) {
+                    $scope.requests = filterFilter($scope.requests2, {
+                        RequestType: 'Doctor'
+                    });
+                }
+                if (x === 2) {
+                    $scope.requests = filterFilter($scope.requests2, {
+                        RequestType: 'VisitPlan'
+                    });
+                }
+
+                if (x === 3) {
+                    $scope.requests = filterFilter($scope.requests2, {
+                        RequestType: 'UnplannedVisit'
+                    });
+                }
+                console.log($scope.requests);
+
             });
 
-        } ; 
+        };
 
-		
+
         var deleteRequest = function (requestId) {
             $http({
                 method: 'POST',
@@ -99,18 +108,18 @@
                     "DoctorID": requestId,
                     "CompanyID": 15
                 },
-            headers: {
+                headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1') ,
-					'X-Frame-Options' : 'DENY'
+                    "UserID": $cookies.getObject('UserID1'),
+                    'X-Frame-Options': 'DENY'
                 }
             }).then(function (res) {
                 //(res.data);
-if($scope.type.id!=0)
-				getRequestListfilterd($scope.type.id)
-			else
-				getRequestList() ; 
+                if ($scope.type.id != 0)
+                    getRequestListfilterd($scope.type.id)
+                else
+                    getRequestList();
             });
         };
 
@@ -123,18 +132,18 @@ if($scope.type.id!=0)
                         "DoctorID": id,
                         "CompanyID": 15
                     },
-                headers: {
-                    "content-type": "Application/json",
-                    "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1') ,
-					'X-Frame-Options' : 'DENY'
-                }
+                    headers: {
+                        "content-type": "Application/json",
+                        "Token": $cookies.getObject('SecurityToken1'),
+                        "UserID": $cookies.getObject('UserID1'),
+                        'X-Frame-Options': 'DENY'
+                    }
                 }).then(function (res) {
                     //(res.data);
-if($scope.type.id!=0)
-				getRequestListfilterd($scope.type.id)
-			else
-				getRequestList() ; 
+                    if ($scope.type.id != 0)
+                        getRequestListfilterd($scope.type.id)
+                    else
+                        getRequestList();
                 });
             }
             if (type === 'VisitPlan') {
@@ -145,44 +154,44 @@ if($scope.type.id!=0)
                         "PlanID": id,
                         "CompanyID": 15
                     },
-                headers: {
-                    "content-type": "Application/json",
-                    "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1') ,
-					'X-Frame-Options' : 'DENY'
-                }
+                    headers: {
+                        "content-type": "Application/json",
+                        "Token": $cookies.getObject('SecurityToken1'),
+                        "UserID": $cookies.getObject('UserID1'),
+                        'X-Frame-Options': 'DENY'
+                    }
                 }).then(function (res) {
                     //(res.data);
-					//(id) ; 
-if($scope.type.id!=0)
-				getRequestListfilterd($scope.type.id)
-			else
-				getRequestList() ; 
+                    //(id) ; 
+                    if ($scope.type.id != 0)
+                        getRequestListfilterd($scope.type.id)
+                    else
+                        getRequestList();
                 });
             }
-			if(type === 'UnplannedVisit'){
-				 $http({
+            if (type === 'UnplannedVisit') {
+                $http({
                     method: 'POST',
                     url: BASE_URL + '/Visit/ApproveUnplannedVisit',
                     data: {
                         "VisitID": id,
                         "CompanyID": 15
                     },
-              headers: {
-                    "content-type": "Application/json",
-                    "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1') ,
-					'X-Frame-Options' : 'DENY'
-                }
+                    headers: {
+                        "content-type": "Application/json",
+                        "Token": $cookies.getObject('SecurityToken1'),
+                        "UserID": $cookies.getObject('UserID1'),
+                        'X-Frame-Options': 'DENY'
+                    }
                 }).then(function (res) {
                     //(res.data);
-					//(id) ; 
-if($scope.type.id!=0)
-				getRequestListfilterd($scope.type.id)
-			else
-				getRequestList() ; 
+                    //(id) ; 
+                    if ($scope.type.id != 0)
+                        getRequestListfilterd($scope.type.id)
+                    else
+                        getRequestList();
                 });
-			}
+            }
         };
 
         var reject = function (id, type) {
@@ -197,21 +206,21 @@ if($scope.type.id!=0)
                         "PlanID": id,
                         "CompanyID": 15
                     },
-              headers: {
-                    "content-type": "Application/json",
-                    "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1') ,
-					'X-Frame-Options' : 'DENY'
-                }
+                    headers: {
+                        "content-type": "Application/json",
+                        "Token": $cookies.getObject('SecurityToken1'),
+                        "UserID": $cookies.getObject('UserID1'),
+                        'X-Frame-Options': 'DENY'
+                    }
                 }).then(function (res) {
                     //(res.data);
-if($scope.type.id!=0)
-				getRequestListfilterd($scope.type.id)
-			else
-				getRequestList() ; 
+                    if ($scope.type.id != 0)
+                        getRequestListfilterd($scope.type.id)
+                    else
+                        getRequestList();
                 });
             }
-			if (type === 'UnplannedVisit') {
+            if (type === 'UnplannedVisit') {
                 $http({
                     method: 'POST',
                     url: BASE_URL + '/Visit/RejectUnplannedVisit',
@@ -219,104 +228,121 @@ if($scope.type.id!=0)
                         "PlanID": id,
                         "CompanyID": 15
                     },
-               headers: {
-                    "content-type": "Application/json",
-                    "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1') ,
-					'X-Frame-Options' : 'DENY'
-                }
+                    headers: {
+                        "content-type": "Application/json",
+                        "Token": $cookies.getObject('SecurityToken1'),
+                        "UserID": $cookies.getObject('UserID1'),
+                        'X-Frame-Options': 'DENY'
+                    }
                 }).then(function (res) {
                     //(res.data);
-                  	if($scope.type.id!=0)
-				getRequestListfilterd($scope.type.id)
-			else
-				getRequestList() ; 
+                    if ($scope.type.id != 0)
+                        getRequestListfilterd($scope.type.id)
+                    else
+                        getRequestList();
 
                 });
             }
-			
+
         };
 
-		$scope.getdeadline = function(){
-			$http({
-				method : "POST" , 
-				url : BASE_URL + "/Visit/GetPlanDeadline",
-			 headers: {
+        $scope.getdeadline = function () {
+            $http({
+                method: "POST",
+                url: BASE_URL + "/Visit/GetPlanDeadline",
+                headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1') ,
-					'X-Frame-Options' : 'DENY'
-                } , 
-				data : {
-				"CompanyID":15
-				}
-			}).then(function(response){
-			   $scope.deadline = response.data.Response.DeadlineDay ; 
-			}) ; 
-		} ; 
-		
-		$scope.getdeadline() ;
-		
-		$scope.setdeadline = function(){
-			$http({
-				method : "POST" , 
-				url : BASE_URL +  "/Visit/ChangePlanDeadline",
-			 headers: {
+                    "UserID": $cookies.getObject('UserID1'),
+                    'X-Frame-Options': 'DENY'
+                },
+                data: {
+                    "CompanyID": 15
+                }
+            }).then(function (response) {
+                $scope.deadline = response.data.Response.DeadlineDay;
+            });
+        };
+
+        $scope.getdeadline();
+
+        $scope.setdeadline = function () {
+            $http({
+                method: "POST",
+                url: BASE_URL + "/Visit/ChangePlanDeadline",
+                headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1') ,
-					'X-Frame-Options' : 'DENY'
-                } , 
-				data : {
-					"Day" : $scope.deadline ,
-				"CompanyID":15
-				}
-			}).then(function(response){
-			   if(response.data.IsSuccess){
-				   $scope.message = "Changed Successfully" ; 
-				   $scope.getdeadline() ; 
-				   window.location.reload() ;
-				   $("#changeDeadline").modal("hide") ; 
-			   } 
-			}) ; 
-		} ; 
-		
-		
-        $scope.types = [{ 'id': 0, 'label': 'All Requests' },
-            { 'id': 1, 'label': 'New Doctor Request' },
-            { 'id': 2, 'label': 'Visit Plan Request' },
-			{ 'id': 3, 'label': 'Unplanned Visit Request' }];
+                    "UserID": $cookies.getObject('UserID1'),
+                    'X-Frame-Options': 'DENY'
+                },
+                data: {
+                    "Day": $scope.deadline,
+                    "CompanyID": 15
+                }
+            }).then(function (response) {
+                if (response.data.IsSuccess) {
+                    $scope.message = "Changed Successfully";
+                    $scope.getdeadline();
+                    window.location.reload();
+                    $("#changeDeadline").modal("hide");
+                }
+            });
+        };
+
+
+        $scope.types = [{
+                'id': 0,
+                'label': 'All Requests'
+            },
+            {
+                'id': 1,
+                'label': 'New Doctor Request'
+            },
+            {
+                'id': 2,
+                'label': 'Visit Plan Request'
+            },
+            {
+                'id': 3,
+                'label': 'Unplanned Visit Request'
+            }
+        ];
 
         $scope.updateType = function (type) {
             //(type);
-			if (type.id === 0) {
+            if (type.id === 0) {
                 getRequestList();
             }
             if (type.id === 1) {
-				$scope.requests = filterFilter($scope.requests2,{RequestType : 'Doctor'}) ; 
-			}
-            if (type.id === 2) {
-                $scope.requests = filterFilter($scope.requests2,{RequestType : 'VisitPlan'}) ;
+                $scope.requests = filterFilter($scope.requests2, {
+                    RequestType: 'Doctor'
+                });
             }
-			
+            if (type.id === 2) {
+                $scope.requests = filterFilter($scope.requests2, {
+                    RequestType: 'VisitPlan'
+                });
+            }
+
             if (type.id === 3) {
-                $scope.requests =filterFilter($scope.requests2,{RequestType : 'UnplannedVisit'}) ;
+                $scope.requests = filterFilter($scope.requests2, {
+                    RequestType: 'UnplannedVisit'
+                });
             }
         };
 
-        getRequestList();
-        getManagers();
+        
         $scope.delete = function (requestId) {
             deleteRequest(requestId);
         };
-        $scope.role = $cookies.getObject('RoleName1');
         $scope.accept = function (id, type) {
             accept(id, type);
         }
         $scope.reject = function (id, type) {
             reject(id, type);
         }
-        $scope.planvisits = function (x,y) {
+        $scope.planvisits = function (x, y) {
             //(x);
             var mm = x.substring(0, 1);
             //(mm.length);
@@ -326,11 +352,11 @@ if($scope.type.id!=0)
             $http({
                 method: "POST",
                 url: BASE_URL + "/Visit/GetPlanVisits",
-              headers: {
+                headers: {
                     "content-type": "Application/json",
                     "Token": $cookies.getObject('SecurityToken1'),
-                    "UserID": $cookies.getObject('UserID1') ,
-					'X-Frame-Options' : 'DENY'
+                    "UserID": $cookies.getObject('UserID1'),
+                    'X-Frame-Options': 'DENY'
                 },
                 data: {
                     "Month": mm,
@@ -340,10 +366,15 @@ if($scope.type.id!=0)
                 }
             }).then(function (response) {
                 //(response.data);
-                $("#myModal").modal("show"); 
+                $("#myModal").modal("show");
                 $scope.visits = response.data.Response.Visits;
             });
 
         };
+        if($scope.role === 'SalesAdmin')
+        getManagers();
+        getRequestList();
+        
+        
     }
 })();

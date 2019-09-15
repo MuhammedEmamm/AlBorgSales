@@ -33,22 +33,23 @@
 							<div class="row">
 								<div class="col-md-12 col-sm-12 col-xs-12">
 									<div class="col-md-4">
-										<button ui-sref="VisitPlanCreate" class="btn btn-lg btn-success btn-block waves-effect waves-light" ng-disabled="cancreate=='Created' ||cancreate=='No provided plan for this month'" ng-if="(nextplanstatus!='Created' && nextplanstatus!='Submitted' &&nextplanstatus!='Approved') &&( (role==='SalesManager' ||role==='SalesRep') && currentID === ID)"> <i class="fa fa-plus"></i> Create Next Month Plan</button>
+										<button ui-sref="VisitPlanCreate" class="btn btn-lg btn-success btn-block waves-effect waves-light" ng-disabled="cancreate=='Created' ||cancreate=='No provided plan for this month'" ng-if="(nextplanstatus!='Created' && nextplanstatus!='Submitted' &&nextplanstatus!='Approved') && currentID === ID"> <i class="fa fa-plus"></i> Create Next Month Plan</button>
 										
 										
-										<button ui-sref="VisitPlanCreate" class="btn btn-lg btn-success btn-block waves-effect waves-light" ng-disabled="cancreate=='Created' ||cancreate=='Approved' || cancreate=='No provided plan for this month'" ng-if="(nextplanstatus=='Created'||nextplanstatus=='Submitted'||nextplanstatus=='Approved') &&( (role==='SalesManager' ||role==='SalesRep') && currentID === ID)"> <i class="fa fa-plus"></i> Next Month Plan </button>
+										<button ui-sref="VisitPlanCreate" class="btn btn-lg btn-success btn-block waves-effect waves-light" ng-disabled="cancreate=='Created' ||cancreate=='Approved' || cancreate=='No provided plan for this month'" ng-if="(nextplanstatus=='Created'||nextplanstatus=='Submitted'||nextplanstatus=='Approved') && currentID === ID"> <i class="fa fa-plus"></i> Next Month Plan </button>
 								
 									</div>
 									<div class="col-md-4">
-										<a data-target="#add-visit" data-toggle="modal" class="btn btn-lg btn-success btn-block waves-effect waves-light" ng-click="getalldata()" ng-if="( (role==='SalesManager' ||role==='SalesRep') && currentID === ID)"> <i class="fa fa-plus"></i> Add new Visit</a>
+										<a data-target="#add-visit" data-toggle="modal" class="btn btn-lg btn-success btn-block waves-effect waves-light" ng-click="getalldata()" ng-if="currentID === ID"> <i class="fa fa-plus"></i> Add new Visit</a>
 									</div>
 									<div class="col-md-4 label label-primary label-lg" style="height: 40px">
-										<h6 style="color: white"><b>Visits In The Plan Can be Between 2 and 350</b></h6> &nbsp;&nbsp;<span class="label label-warning label-lg"> {{cancreate}}</span></div>&nbsp;
+										<h6 style="color: white"><b>Visits In The Plan Can be Between 2 and 350</b></h6> &nbsp;&nbsp;<span class="label label-warning label-lg"> {{cancreate}}</span>
+									</div>&nbsp;
 									<br>
 									<br>
 									<br>
-									<button class="btn btn-primary pull-right" ng-click="CreatePlan()" ng-disabled="cancreate=='Created' || cancreate=='Submitted' || cancreate=='Approved'" ng-show="(role==='SalesManager'&& currentID ===ID) || (role==='SalesRep')"><i class="fa fa-plus"></i> Create Current Month Plan</button>
-									<div ng-show="role==='SalesManager'">
+									<button class="btn btn-primary pull-right" ng-click="CreatePlan()" ng-disabled="cancreate=='Created' || cancreate=='Submitted' || cancreate=='Approved'" ng-show="currentID ===ID"><i class="fa fa-plus"></i> Create Current Month Plan</button>
+									<div ng-show="role!=='SalesRep'">
 										<form ng-submit="ViewPlan()">
 											<select ng-model="SalesRepID" ng-init="SalesRepID = 0" style="border-radius: 5px ; color: black" ng-change="getID(SalesRepID)">
 												<option disabled ng-selected ng-value="0">Choose SalesRep</option>
@@ -59,7 +60,7 @@
 											<button class="btn btn-warning" type="submit" ng-show="currentID!=ID">View Plan</button>
 										</form>
 									</div>
-										<img id="LoadVisits" src="/AlBorgSales/Assets/Images/Rolling-1s-42px.gif" style="width: 50px ; height: 50px ; margin-left: 2%" ng-show="loadvisits===true &&role==='SalesManager'" >
+										<img id="LoadVisits" src="/AlBorgSales/Assets/Images/Rolling-1s-42px.gif" style="width: 50px ; height: 50px ; margin-left: 2%" ng-show="loadvisits===true &&role!=='SalesRep'" >
 
 									
 									<div id="external-events" class="m-t-20" ng-repeat="visit in visits" ng-mousedown="getvisitid(visit.VisitID)">
@@ -68,7 +69,7 @@
 										<div class="external-event bg-danger" data-class="bg-danger"> 
 													<img class="pull-right" src="/AlBorgSales/Assets/Images/Ellipsis-2.4s-200px.gif" ng-show="PressAdd" style="width: 30px ; height: 30px ;" >
  											
-											<span ng-show="role==='SalesManager' && currentID !== ID && !PressAdd" class="label label-primary label-lg pull-right" style="cursor: pointer" ng-click="AddToVisitPlan(visit.VisitID)">Add to My VisitPlan</span>		
+											<span ng-show="currentID !== ID && !PressAdd" class="label label-primary label-lg pull-right" style="cursor: pointer" ng-click="AddToVisitPlan(visit.VisitID)">Add to My VisitPlan</span>		
  										
 											<i class="fa fa-move"></i>
 											<div class="card-box table-responsive">
